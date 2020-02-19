@@ -6,10 +6,16 @@
   "scripts": {
     "test": "jest"
   },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^25.1.2",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "lint-staged": "^10.0.7",
