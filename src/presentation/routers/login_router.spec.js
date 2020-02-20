@@ -6,9 +6,11 @@ const makeSut = () => {
         auth(email, password) {
             this.email = email
             this.password = password
+            return this.accessToken
         }
     }
     const authUseCaseSpy = new AuthUseCaseSpy()
+    authUseCaseSpy.accessToken = 'valid_token'
     const sut = new LoginRouter(authUseCaseSpy)
     return { authUseCaseSpy, sut }
 }
@@ -71,7 +73,8 @@ describe('Login Router', () => {
                 password: 'invalid_password'
             }
         }
-        const { sut } = makeSut()
+        const { sut, authUseCaseSpy } = makeSut()
+        authUseCaseSpy.accessToken = null
         const httpResponse = sut.route(httpRequest)
         expect(httpResponse.statusCode).toBe(401)
         expect(httpResponse.body).toEqual(new UnauthorizedError())
@@ -102,5 +105,17 @@ describe('Login Router', () => {
         }
         const httpResponse = sut.route(httpRequest)
         expect(httpResponse.statusCode).toBe(500)
+    })
+
+    test('Should Return 200 valid credentials are provided', () => {
+        const { sut } = makeSut()
+        httpRequest = {
+            body: {
+                email: 'valid_email@mail.com',
+                password: 'valid_password'
+            }
+        }
+        const httpResponse = sut.route(httpRequest)
+        expect(httpResponse.statusCode).toBe(200)
     })
 })
