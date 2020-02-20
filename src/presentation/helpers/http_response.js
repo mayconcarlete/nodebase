@@ -1,9 +1,10 @@
 const MissingParamError = require('./missing_param_error')
 const UnauthorizedError = require('./unauthorized_error')
 module.exports = class HttpResponse {
-    static ok() {
+    static ok(data) {
         return {
-            statusCode: 200
+            statusCode: 200,
+            body: data
         }
     }
 
