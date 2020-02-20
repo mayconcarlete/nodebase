@@ -7,9 +7,16 @@ module.exports = class HttpResponse {
             body: new MissingParamError(paramName)
         }
     }
+    static unauthorizedError() {
+        return {
+            statusCode: 401
+
+        }
+    }
     static serverError() {
         return {
             statusCode: 500
         }
     }
+
 }
