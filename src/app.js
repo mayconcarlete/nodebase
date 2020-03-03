@@ -4,11 +4,9 @@ require('dotenv').config({
 })
 const express = require('express')
 const http = require('http')
-const { helloWorldRoute, userRoute, authenticateRoute, dashboardRoute } = require('./app/routes/index')
+const { userRoute, authenticateRoute } = require('./app/routes/index')
 const ioClass = require('./socket_io')
-const mongoose = require('mongoose')
-const a = require('./aaa')
-const url = process.env.NODE_ENV === 'test' ? 'mongodb://localhost:27017/dbtestes' : 'mongodb://localhost:27017/database'
+const mongodb = require('./app/mongodb/initMongo')
 
 class App {
     constructor() {
@@ -20,11 +18,7 @@ class App {
         this.app = express()
         this.server = http.createServer(this.app)
         this.io = ioClass.listen(this.server)
-
-        mongoose.connect(url)
-        //await a.create({ name: 'carlete4' })
-        const users = await a.find()
-        console.log(users)
+        mongodb.init()   
     }
     middlewares() {
         this.app.use(express.json())
@@ -35,7 +29,6 @@ class App {
     }
     routes() {
         this.app.use('/user', userRoute)
-        //  this.app.use('/address', addressRoute)
         this.app.use('/authenticate', authenticateRoute)
     }
 }

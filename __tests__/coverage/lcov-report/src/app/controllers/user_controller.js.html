@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.86% </span>
+                <span class="strong">55.56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/14</span>
+                <span class='fraction'>10/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.86% </span>
+                <span class="strong">55.56% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/14</span>
+                <span class='fraction'>10/18</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -81,62 +81,71 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const yupService = require('../services/yup_service')
-const { User } = require('../models')
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const yupService = require('../services/yup_service')
+const bcrypt = require('bcryptjs')
+const UserRepository = require('../repositories/user_repository')
 &nbsp;
-class CreateUser {
+class UserController {
     async storage(req, res) {
         const { email, name, password, confirmPassword } = req.body
-&nbsp;
+        console.log(req.body)
         try {
-            if (!(await yupService.checkFields(req.body))) {
-                return res.status(400).json({ error: 'Invalid params' })
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!(await yupService.checkFields(req.body))) {
+<span class="cstat-no" title="statement not covered" >                return res.status(400).json({ error: 'Invalid params' })</span>
             }
-            if (password !== confirmPassword) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (password !== confirmPassword) {
                 return res.status(400).json({ error: 'Password doesnt match' })
             }
-            const userExists = await User.findOne({ where: { email } })
-            if (userExists) {
-                return res.status(400).json({ error: 'User already exists' })
+            const userExists = <span class="cstat-no" title="statement not covered" >await UserRepository.getByEmail(email)</span>
+<span class="cstat-no" title="statement not covered" >            if (userExists) {</span>
+<span class="cstat-no" title="statement not covered" >                return res.status(400).json({ error: 'User already exists' })</span>
             }
-            return res.status(200).json({ msg: 'Cadastro realizado with success' })
-        } catch (error) {
-<span class="cstat-no" title="statement not covered" >            return res.status(500).json({ error: 'Server error' })</span>
+            const user = <span class="cstat-no" title="statement not covered" >{email, name, password: await bcrypt.hash(password,8)}</span>
+            const newUser = <span class="cstat-no" title="statement not covered" >await UserRepository.store(user)</span>
+<span class="cstat-no" title="statement not covered" >            return res.status(200).json({ msg: 'Cadastro realizado with success',newUser})</span>
+            } catch (error) {
+<span class="cstat-no" title="statement not covered" >            return res.status(500).json({ error })</span>
         }
     }
 }
-module.exports = new CreateUser()</pre></td></tr></table></pre>
+module.exports = new UserController()</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Mar 02 2020 14:53:13 GMT-0300 (GMT-03:00)
+                at Tue Mar 03 2020 18:08:46 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
