@@ -1,7 +1,9 @@
-const router = require('express').Router()
-const addressController = require('../controllers/address_controller')
-const authMiddleware = require('../middlewares/auth')
+const express = require('express')
+const router = express.Router()
+const AuthenticateService = require('../middlewares/auth')
+const AddressController = require('../controllers/address_controller')
 
-router.post('/', authMiddleware, addressController.store)
+router.post('/', AuthenticateService.authorize, AddressController.store)
+router.get('/:id', AddressController.index)
 
 module.exports = router

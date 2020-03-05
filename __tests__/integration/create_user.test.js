@@ -15,6 +15,9 @@ describe('Integration test of create user route', () => {
         await mongoose.connection.dropCollection("users")
 
     })
+    afterAll(async()=>{
+        await mongoose.connection.dropCollection("users")
+    })
     it('should return error 400 if password and confirm password are different', async () => {
 
         const response = await request(app).post('/user').send({

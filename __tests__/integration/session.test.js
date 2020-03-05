@@ -11,7 +11,11 @@ const user = {
 describe('Authentication', () => {
     beforeEach(async () => {
         await User.create(user)
-        await mongoose.connection.dropCollection('users')
+        await mongoose.connection.dropCollection("users")
+      
+    })
+    afterAll(async()=>{
+        await mongoose.connection.dropCollection("users")
     })
     it('should return 400 if email not exists', async () => {
         const response = await request(app).post('/authenticate').send({ password: 'valid_password' })
