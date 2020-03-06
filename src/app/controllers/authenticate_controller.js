@@ -22,7 +22,14 @@ class AuthenticateController {
       }
 
       const token = await AuthenticateService.generateToken(user)
-      return res.json(token)
+
+      return res.json({
+        id: user._id,
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        token
+      })
     } catch (error) {
       return res.status(500).json({ message: 'Erro on server', error })
     }

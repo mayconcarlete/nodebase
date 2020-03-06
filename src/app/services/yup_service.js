@@ -1,12 +1,43 @@
 const yup = require('yup')
 
 class YupService {
-  async checkEmail (email) {
+  async checkName (data) {
     const schema = yup.object().shape({
-      email: yup.string().required()
+      name: yup.string().required().min(3)
     })
-    const result = schema.isValid(email)
+    const result = await schema.isValid(data)
     return result
+  }
+
+  async checkPhone (data) {
+    const schema = yup.object().shape({
+      phone: yup.string().required().min(10)
+    })
+    const result = await schema.isValid(data)
+    return result
+  }
+
+  async checkEmail (data) {
+    const schema = yup.object().shape({
+      email: yup.string().email().required()
+    })
+    const result = await schema.isValid(data)
+    return result
+  }
+
+  async checkPassword (data) {
+    const schema = yup.object().shape({
+      password: yup.string().required().min(6),
+      confirmPassword: yup.string().required()
+    })
+    const result = await schema.isValid(data)
+    if (!result) {
+      return false
+    }
+    if (data.password !== data.confirmPassword) {
+      return false
+    }
+    return true
   }
 
   async checkFields (fields) {
@@ -19,6 +50,7 @@ class YupService {
         .string()
         .required()
         .min(3),
+      phone: yup.string().required().min(10),
       password: yup
         .string()
         .required()

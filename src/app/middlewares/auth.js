@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken')
-//const { promisify } = require('util')
+// const { promisify } = require('util')
 
 class AuthenticateService {
   async generateToken (user) {
     const token = jwt.sign(
-      { name: user.name, id: user._id, email: user.email },
+      { name: user.name, id: user._id, email: user.email, phone: user.phone },
       process.env.SALT_KEY,
-      { expiresIn: '1d' }
+      { expiresIn: '1h' }
     )
     return token
   }

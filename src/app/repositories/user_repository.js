@@ -1,5 +1,5 @@
 const User = require('../mongodb/models/User')
-
+const bcrypt = require('bcryptjs')
 class UserRepository {
   async index () {
     const users = await User.find()
@@ -21,17 +21,53 @@ class UserRepository {
     return newUser
   }
 
-  async updateUserEmail (id, user) {
-    const { name, email, password } = user
+  async updateUserEmail (id, email) {
     try {
-      const userUpdated = await User.findByIdAndUpdate(id, {
+      const emailUpdated = await User.findByIdAndUpdate(id, {
         $set: {
-          name,
-          email,
-          password
+          email
         }
-      })
-      return userUpdated
+      }, { new: true })
+      return emailUpdated
+    } catch (error) {
+      return error
+    }
+  }
+
+  async updateUserPassword (id, password) {
+    try {
+      const passwordUpdated = await User.findByIdAndUpdate(id, {
+        $set: {
+          password: await bcrypt.hash(password, 8)
+        }
+      }, { new: true })
+      return passwordUpdated
+    } catch (error) {
+      return error
+    }
+  }
+
+  async updateUserName (id, name) {
+    try {
+      const nameUpdated = await User.findByIdAndUpdate(id, {
+        $set: {
+          name
+        }
+      }, { new: true })
+      return nameUpdated
+    } catch (error) {
+      return error
+    }
+  }
+
+  async updateUserPhone (id, phone) {
+    try {
+      const phoneUpdated = await User.findByIdAndUpdate(id, {
+        $set: {
+          phone
+        }
+      }, { new: true })
+      return phoneUpdated
     } catch (error) {
       return error
     }
