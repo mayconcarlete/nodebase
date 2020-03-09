@@ -7,7 +7,7 @@ class AddressRepository {
   }
 
   async getAddressesByUserId (id) {
-    const addresses = await Address.find({ ownerId: id })
+    const addresses = await Address.find({}).populate('ownerId')
     return addresses
   }
 

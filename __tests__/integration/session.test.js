@@ -1,7 +1,6 @@
 const request = require('supertest')
 const app = require('../../src/app')
 const mongoose = require('mongoose')
-const User = require('../../src/app/mongodb/models/User')
 const GoodRequest = require('./GoodRequest')
 
 const user = {
@@ -16,7 +15,12 @@ describe('Authentication', () => {
   beforeEach(async () => {
     await mongoose.connection.dropCollection('users', (err) => {
       if (err) {
-        console.log('não existe Db')
+      }
+    })
+  })
+  afterAll(async () => {
+    await mongoose.connection.dropCollection('users', (err) => {
+      if (err) {
       }
     })
   })

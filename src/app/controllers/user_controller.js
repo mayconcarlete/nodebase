@@ -1,7 +1,7 @@
 const yupService = require('../services/yup_service')
 const bcrypt = require('bcryptjs')
 const UserRepository = require('../repositories/user_repository')
-
+const User = require('../mongodb/models/User')
 class UserController {
   async store (req, res) {
     const { email, name, password, confirmPassword, phone } = req.body
@@ -34,6 +34,9 @@ class UserController {
     const { email } = req.body
 
     try {
+      if (!email) {
+        return res.status(400).json({ message: 'Param email must be provided' })
+      }
       const isEmail = await yupService.checkEmail(req.body)
       if (!isEmail) {
         return res.status(400).json({ message: 'Invalid email format.' })
@@ -52,6 +55,9 @@ class UserController {
   async updatePassword (req, res) {
     const id = req.id
     try {
+      if (!req.body.password) {
+        return res.status(400).json({ message: 'Password must be provided' })
+      }
       const isPassword = await yupService.checkPassword(req.body)
       if (!isPassword) {
         return res.status(400).json({ message: 'Password and Confirm Password must be valid.' })
@@ -101,6 +107,16 @@ class UserController {
       return res.json(user)
     } catch (error) {
       return res.status(500).json({ message: 'Internal error' })
+    }
+  }
+
+  async delete (req, res) {
+    const id = req.id
+    try {
+      const deletedUser = await User.findByIdAndDelete(id)
+      return res.json(deletedUser)
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro de servidro' })
     }
   }
 }

@@ -16,13 +16,13 @@ describe('Test Update email route /user/updateemail', () => {
       }
     })
   })
-  it('Should return 401 if user try update email without token', async () => {
-    const emailUpdated = {
-      email: 'jsoerval@hotmail.com'
-    }
-    const response = await request(app).put('/user/updateemail').send(emailUpdated)
-    expect(response.status).toBe(401)
+  it('Should return 400 if email is not provided ', async () => {
+    const response = await GoodRequest.makeGoodRequest()
+    const token = response.body.token
+    const updateEmail = await request(app).put('/user/updateemail').send({ token })
+    expect(updateEmail.status).toBe(400)
   })
+
   it('Should return 400 if email is invalid', async () => {
     const response = await GoodRequest.makeGoodRequest()
     const token = response.body.token
@@ -32,6 +32,14 @@ describe('Test Update email route /user/updateemail', () => {
     })
     expect(updateEmail.status).toBe(400)
   })
+  it('Should return 401 if user try update email without token', async () => {
+    const emailUpdated = {
+      email: 'jsoerval@hotmail.com'
+    }
+    const response = await request(app).put('/user/updateemail').send(emailUpdated)
+    expect(response.status).toBe(401)
+  })
+
   it('Should return 400 if email is valid but it already exists in DB', async () => {
     const response = await GoodRequest.makeGoodRequest()
     const token = response.body.token
@@ -41,5 +49,13 @@ describe('Test Update email route /user/updateemail', () => {
     })
     expect(updateEmail.status).toBe(400)
   })
-  it('Should return ')
+  it('Should return 200 if email was updated', async () => {
+    const response = await GoodRequest.makeGoodRequest()
+    const token = response.body.token
+    const emailUpdated = await request(app).put('/user/updateemail').send({
+      token,
+      email: 'new_valid_email@mail.com'
+    })
+    expect(emailUpdated.status).toBe(200)
+  })
 })

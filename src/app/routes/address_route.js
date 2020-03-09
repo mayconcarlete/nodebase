@@ -4,6 +4,6 @@ const AuthenticateService = require('../middlewares/auth')
 const AddressController = require('../controllers/address_controller')
 
 router.post('/', AuthenticateService.authorize, AddressController.store)
-router.get('/:id', AddressController.index)
+router.get('/', AddressController.index)
 
 module.exports = router

@@ -1,7 +1,6 @@
 const request = require('supertest')
 const app = require('../../../src/app')
 const mongoose = require('mongoose')
-const GoodRequest = require('../GoodRequest')
 
 const user = {
   name: 'valid_name',
@@ -15,11 +14,16 @@ describe('Integration test of create user route', () => {
   beforeEach(async () => {
     await mongoose.connection.dropCollection('users', (err) => {
       if (err) {
-        console.log('não existe Db')
+
       }
     })
   })
-
+  afterAll(async () => {
+    await mongoose.connection.dropCollection('users', (err) => {
+      if (err) {
+      }
+    })
+  })
   it('should return error 400 if password and confirm password are different', async () => {
     const wrongConfirm = {
       name: user.name,

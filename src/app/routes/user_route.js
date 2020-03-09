@@ -10,6 +10,7 @@ router.put('/updatename', AuthenticateService.authorize, UserController.updateNa
 router.put('/updatephone', AuthenticateService.authorize, UserController.updatePhone)
 // router.put('/deleteuser', AuthenticateService.authorize, UserController.deleteUser)
 // colocar como admin para pesquisa
+router.delete('/delete', AuthenticateService.authorize, UserController.delete)
 router.get('/:email', UserController.show)
 
 module.exports = router
