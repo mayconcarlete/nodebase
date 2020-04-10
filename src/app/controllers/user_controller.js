@@ -22,7 +22,7 @@ class UserController {
       const newUser = await UserRepository.store(user)
       return res
         .status(200)
-        .json({ msg: 'Cadastro realizado with successz', newUser })
+        .json({ msg: 'Cadastro realizado with success', newUser })
     } catch (error) {
       console.log(error)
       return res.status(500).json({ error })
