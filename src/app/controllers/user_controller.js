@@ -2,6 +2,7 @@ const yupService = require('../services/yup_service')
 const bcrypt = require('bcryptjs')
 const UserRepository = require('../repositories/user_repository')
 const User = require('../mongodb/models/User')
+
 class UserController {
   async store (req, res) {
     const { email, name, password, confirmPassword, phone } = req.body
@@ -22,7 +23,12 @@ class UserController {
       const newUser = await UserRepository.store(user)
       return res
         .status(200)
-        .json({ msg: 'Cadastro realizado with success', newUser })
+        .json({
+          email: newUser.email,
+          phone: newUser.phone,
+          name: newUser.name,
+          id: newUser._id
+        })
     } catch (error) {
       console.log(error)
       return res.status(500).json({ error })

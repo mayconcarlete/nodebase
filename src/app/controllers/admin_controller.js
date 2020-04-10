@@ -1,3 +1,7 @@
+const yupService = require('../services/yup_service')
+const bcrypt = require('bcryptjs')
+const UserRepository = require('../repositories/user_repository')
+const User = require('../mongodb/models/User')
 class AdminController{
     async store (req, res) {
         const { email, name, password, confirmPassword, phone } = req.body

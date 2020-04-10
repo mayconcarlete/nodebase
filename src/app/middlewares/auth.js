@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 class AuthenticateService {
   async generateToken (user) {
     const token = jwt.sign(
-      { name: user.name, id: user._id, email: user.email, phone: user.phone },
+      { name: user.name, id: user._id, email: user.email, phone: user.phone, roles:user.roles },
       process.env.SALT_KEY,
       { expiresIn: '1h' }
     )
@@ -42,10 +42,10 @@ class AuthenticateService {
       return res.status(401).json({ message: 'Token must be provided' })
     }
     jwt.verify(token, process.env.SALT_KEY, function (err, decoded) {
-      if (error) {
+      if (err) {
         return res.status(401).json({ message: 'Invalid token' })
       } else {
-        if (decoded.roles.included('admin')) {
+        if (decoded.roles.includes('admin')) {
           next()
         } else {
           return res

@@ -28,6 +28,7 @@ class AuthenticateController {
         name: user.name,
         phone: user.phone,
         email: user.email,
+        roles:user.roles,
         token
       })
     } catch (error) {
