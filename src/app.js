@@ -4,9 +4,10 @@ require('dotenv').config({
 })
 const express = require('express')
 const http = require('http')
-const { userRoute, authenticateRoute, addressRoute } = require('./app/routes/index')
+const { userRoute, authenticateRoute, addressRoute, productsRoute } = require('./app/routes/index')
 const ioClass = require('./socket_io')
 const mongodb = require('./app/mongodb/initMongo')
+const cors = require('cors')
 
 class App {
   constructor () {
@@ -23,6 +24,7 @@ class App {
   }
 
   middlewares () {
+    this.app.use(cors())
     this.app.use(express.json())
     this.app.use((req, res, next) => {
       req.io = this.io
@@ -34,6 +36,8 @@ class App {
     this.app.use('/user', userRoute)
     this.app.use('/authenticate', authenticateRoute)
     this.app.use('/address', addressRoute)
+    this.app.use('/products', productsRoute)
+    
   }
 }
 

@@ -9,7 +9,9 @@ const schema = new Schema({
   state: { type: String, required: true, default: 'ES' },
   zipCode: { type: String, required: true },
   number: { type: String, required: true },
-  note: { type: String }
+  note: { type: String },
+  name:{type: String, required:true},
+  isHome:{type:Boolean, default: false, required:true}
 })
 
 module.exports = mongoose.model('Address', schema)

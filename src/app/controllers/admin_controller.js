@@ -1,34 +1,30 @@
-const yupService = require('../services/yup_service')
-const bcrypt = require('bcryptjs')
-const UserRepository = require('../repositories/user_repository')
-const User = require('../mongodb/models/User')
-class UserController {
-  async store (req, res) {
-    const { email, name, password, confirmPassword, phone } = req.body
-    try {
-      if (!(await yupService.checkFields(req.body))) {
-        return res.status(400).json({ error: 'Invalid params' })
+class AdminController{
+    async store (req, res) {
+        const { email, name, password, confirmPassword, phone } = req.body
+        try {
+          if (!(await yupService.checkFields(req.body))) {
+            return res.status(400).json({ error: 'Invalid params' })
+          }
+    
+          if (password !== confirmPassword) {
+            return res.status(400).json({ error: 'Password doesnt match' })
+          }
+          const userExists = await UserRepository.getByEmail(email)
+          if (userExists) {
+            return res.status(400).json({ error: 'User already exists' })
+          }
+    
+          const user = { email, phone, name, password: await bcrypt.hash(password, 8), roles:'admin' }
+          const newUser = await UserRepository.store(user)
+          return res
+            .status(200)
+            .json({ msg: 'Cadastro realizado with success', newUser })
+        } catch (error) {
+          console.log(error)
+          return res.status(500).json({ error })
+        }
       }
-
-      if (password !== confirmPassword) {
-        return res.status(400).json({ error: 'Password doesnt match' })
-      }
-      const userExists = await UserRepository.getByEmail(email)
-      if (userExists) {
-        return res.status(400).json({ error: 'User already exists' })
-      }
-
-      const user = { email, phone, name, password: await bcrypt.hash(password, 8), roles:'user' }
-      const newUser = await UserRepository.store(user)
-      return res
-        .status(200)
-        .json({ msg: 'Cadastro realizado with success', newUser })
-    } catch (error) {
-      console.log(error)
-      return res.status(500).json({ error })
-    }
-  }
-
+      
   async updateEmail (req, res) {
     const id = req.id
     const { email } = req.body
@@ -120,4 +116,5 @@ class UserController {
     }
   }
 }
-module.exports = new UserController()
+
+module.exports = new AdminController()

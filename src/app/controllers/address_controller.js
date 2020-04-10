@@ -9,7 +9,8 @@ class AddressController {
       city: req.body.city,
       zipCode: req.body.zipCode,
       number: req.body.number,
-      note: req.body.note
+      note: req.body.note,
+      name:req.body.name
     }
     try {
       const newAddress = await AddressRepository.store(address)

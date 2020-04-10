@@ -1,5 +1,5 @@
 const app = require('./app')
 
-app.listen(3333, () => {
-    console.log('On FireUp on port:3000')
+app.listen(4000, () => {
+    console.log('On FireUp on port:4000')
 })
