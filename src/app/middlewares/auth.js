@@ -12,7 +12,9 @@ class AuthenticateService {
   }
 
   async decodeToken (token) {
-    const data = jwt.decode(token, process.env.SALT_KEY)
+    const [, splitedToken] = token.split(' ')
+    console.log(token)
+    const data = jwt.decode(splitedToken, process.env.SALT_KEY)
     return data
   }
 
@@ -24,7 +26,8 @@ class AuthenticateService {
         message: 'Token must be provided'
       })
     } else {
-      jwt.verify(token, process.env.SALT_KEY, function (error, decoded) {
+      const [, splitedToken] = token.split(' ')
+      jwt.verify(splitedToken, process.env.SALT_KEY, function (error, decoded) {
         if (error) {
           return res.status(401).json({ message: 'Invalid Token' })
         } else {
@@ -41,7 +44,8 @@ class AuthenticateService {
     if (!token) {
       return res.status(401).json({ message: 'Token must be provided' })
     }
-    jwt.verify(token, process.env.SALT_KEY, function (err, decoded) {
+    const [, splitedToken] = token.split(' ')
+    jwt.verify(splitedToken, process.env.SALT_KEY, function (err, decoded) {
       if (err) {
         return res.status(401).json({ message: 'Invalid token' })
       } else {

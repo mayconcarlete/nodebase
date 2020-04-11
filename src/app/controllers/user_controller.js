@@ -52,7 +52,13 @@ class UserController {
         return res.status(400).json({ message: 'Email is not available' })
       }
       const userUpdated = await UserRepository.updateUserEmail(id, email)
-      return res.json(userUpdated)
+      return res
+      .json({
+        email: userUpdated.email,
+        phone: userUpdated.phone,
+        name: userUpdated.name,
+        id: userUpdated._id
+      })
     } catch (error) {
       res.status(500).json({ message: 'Ocorreu um erro interno.' })
     }
@@ -110,7 +116,13 @@ class UserController {
       if (!user || user === []) {
         return res.status(400).json({ message: 'User not found' })
       }
-      return res.json(user)
+      return res
+      .json({
+        email: user.email,
+        phone: user.phone,
+        name: user.name,
+        id: user._id
+      })
     } catch (error) {
       return res.status(500).json({ message: 'Internal error' })
     }
