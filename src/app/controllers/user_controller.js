@@ -19,7 +19,7 @@ class UserController {
         return res.status(400).json({ error: 'User already exists' })
       }
 
-      const user = { email, phone, name, password: await bcrypt.hash(password, 8), roles:'user' }
+      const user = { email:email.toLowerCase(), phone, name, password: await bcrypt.hash(password, 8), roles:'user' }
       const newUser = await UserRepository.store(user)
       return res
         .status(200)
@@ -67,26 +67,25 @@ class UserController {
   async updatePassword (req, res) {
     const id = req.id
     try {
-      if (!req.body.password) {
+      if (!req.body.newPassword) {
         return res.status(400).json({ message: 'Password must be provided' })
       }
-      if (!req.body.confirmPassword) {
-        return res.status(400).json({ message: 'Password Confirmation must be provided' })
+      if (!req.body.confirmNewPassword) {
+        return res.status(400).json({ message: 'New Password Confirmation must be provided' })
       }
-      if(req.body.password!==req.body.confirmPassword){
-        return res.status(400).json({ message: 'Password Confirmation and password does not match' })
+      if(req.body.newPassword!==req.body.confirmNewPassword){
+        return res.status(400).json({ message: 'New Password Confirmation and new password does not match' })
       }
-      const isPassword = await yupService.checkPassword(req.body)
-      if (!isPassword) {
-        return res.status(400).json({ message: 'Password and Confirm Password must be valid.' })
+      if (req.body.newPassword.length <6 ) {
+        return res.status(400).json({ message: 'New password must have at least 6 characters' })
       }
-      const passwordUpdated = await UserRepository.updateUserPassword(id, req.body.password)
+      const userUpdated = await UserRepository.updateUserPassword(id, req.body.newPassword)
       return res
       .json({
-        email: passwordUpdated.email,
-        phone: passwordUpdated.phone,
-        name: passwordUpdated.name,
-        id: passwordUpdated._id
+        email: userUpdated.email,
+        phone: userUpdated.phone,
+        name: userUpdated.name,
+        id: userUpdated._id
       })
     } catch (error) {
       return res.status(500).json({ message: 'Internal error.' })
@@ -98,10 +97,16 @@ class UserController {
     try {
       const isName = await yupService.checkName(req.body)
       if (!isName) {
-        return res.status(400).json({ message: 'Invalid name' })
+        return res.status(400).json({ message: 'Invalid name, name must need to have at least 3 characters' })
       }
-      const nameUpdated = await UserRepository.updateUserName(id, req.body.name)
-      return res.json(nameUpdated)
+      const userUpdated = await UserRepository.updateUserName(id, req.body.name)
+      return res
+      .json({
+        email: userUpdated.email,
+        phone: userUpdated.phone,
+        name: userUpdated.name,
+        id: userUpdated._id
+      })
     } catch (error) {
       return res.status(500).json({ message: 'Internal error.' })
     }
@@ -114,8 +119,14 @@ class UserController {
       if (!isPhone) {
         return res.status(400).json({ message: 'Invalid phone.' })
       }
-      const phoneUpdated = await UserRepository.updateUserPhone(id, req.body.phone)
-      return res.json(phoneUpdated)
+      const userUpdated = await UserRepository.updateUserPhone(id, req.body.phone)
+      return res
+      .json({
+        email: userUpdated.email,
+        phone: userUpdated.phone,
+        name: userUpdated.name,
+        id: userUpdated._id
+      })
     } catch (error) {
       return res.status(500).json({ message: 'Internal error' })
     }
@@ -143,8 +154,17 @@ class UserController {
   async delete (req, res) {
     const id = req.id
     try {
-      const deletedUser = await User.findByIdAndDelete(id)
-      return res.json(deletedUser)
+      const userUpdated = await User.findByIdAndUpdate(id,{
+        isDeleted:true
+      }, {new:true})
+      return res
+      .json({
+        email: userUpdated.email,
+        phone: userUpdated.phone,
+        name: userUpdated.name,
+        id: userUpdated._id,
+        isDeleted: userUpdated.isDeleted
+      })
     } catch (error) {
       return res.status(500).json({ message: 'Erro de servidro' })
     }

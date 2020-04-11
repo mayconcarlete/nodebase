@@ -12,6 +12,9 @@ const schema = new Schema({
   note: { type: String },
   name:{type: String, required:true},
   isHome:{type:Boolean, default: false, required:true}
+},
+{
+  timestamps:true
 })
 
 module.exports = mongoose.model('Address', schema)
