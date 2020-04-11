@@ -8,7 +8,7 @@ const { userRoute, authenticateRoute, addressRoute, productsRoute,adminRoute } =
 const ioClass = require('./socket_io')
 const mongodb = require('./app/mongodb/initMongo')
 const cors = require('cors')
-
+const bodyParser = require('body-parser')
 class App {
   constructor () {
     this.initServer()
@@ -25,7 +25,8 @@ class App {
 
   middlewares () {
     this.app.use(cors())
-    this.app.use(express.json())
+    this.app.use(bodyParser.urlencoded({extended:false}))
+    this.app.use(bodyParser.json())
     this.app.use((req, res, next) => {
       req.io = this.io
       return next()

@@ -70,12 +70,24 @@ class UserController {
       if (!req.body.password) {
         return res.status(400).json({ message: 'Password must be provided' })
       }
+      if (!req.body.confirmPassword) {
+        return res.status(400).json({ message: 'Password Confirmation must be provided' })
+      }
+      if(req.body.password!==req.body.confirmPassword){
+        return res.status(400).json({ message: 'Password Confirmation and password does not match' })
+      }
       const isPassword = await yupService.checkPassword(req.body)
       if (!isPassword) {
         return res.status(400).json({ message: 'Password and Confirm Password must be valid.' })
       }
       const passwordUpdated = await UserRepository.updateUserPassword(id, req.body.password)
-      return res.json(passwordUpdated)
+      return res
+      .json({
+        email: passwordUpdated.email,
+        phone: passwordUpdated.phone,
+        name: passwordUpdated.name,
+        id: passwordUpdated._id
+      })
     } catch (error) {
       return res.status(500).json({ message: 'Internal error.' })
     }
