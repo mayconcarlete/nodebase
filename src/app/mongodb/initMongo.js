@@ -8,7 +8,7 @@ class MongoDb {
 
   init () {
     console.log(`Usando a url: ${url}`)
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true })
     require('./models/Address')
     require('./models/User')
   }

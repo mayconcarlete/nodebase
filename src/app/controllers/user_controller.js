@@ -6,6 +6,7 @@ const User = require('../mongodb/models/User')
 class UserController {
   async store (req, res) {
     const { email, name, password, confirmPassword, phone } = req.body
+    const emailLowerCase = email.toLowerCase()
     try {
       if (!(await yupService.checkFields(req.body))) {
         return res.status(400).json({ error: 'Invalid params' })
@@ -14,12 +15,12 @@ class UserController {
       if (password !== confirmPassword) {
         return res.status(400).json({ error: 'Password doesnt match' })
       }
-      const userExists = await UserRepository.getByEmail(email)
+      const userExists = await UserRepository.getByEmail(emailLowerCase)
       if (userExists) {
         return res.status(400).json({ error: 'User already exists' })
       }
 
-      const user = { email:email.toLowerCase(), phone, name, password: await bcrypt.hash(password, 8), roles:'user' }
+      const user = { email:emailLowerCase, phone, name, password: await bcrypt.hash(password, 8), roles:'user' }
       const newUser = await UserRepository.store(user)
       return res
         .status(200)
