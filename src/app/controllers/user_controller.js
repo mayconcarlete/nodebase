@@ -1,6 +1,7 @@
 const yupService = require('../services/yup_service')
 const bcrypt = require('bcryptjs')
 const UserRepository = require('../repositories/user_repository')
+const authenticateService = require('../middlewares/auth')
 const User = require('../mongodb/models/User')
 
 class UserController {
@@ -22,9 +23,12 @@ class UserController {
 
       const user = { email:emailLowerCase, phone, name, password: await bcrypt.hash(password, 8), roles:'user' }
       const newUser = await UserRepository.store(user)
+      const token = await authenticateService.generateToken( { name: newUser.name, id: newUser._id, email: newUser.email, phone: newUser.phone, roles:newUser.roles })
       return res
         .status(200)
         .json({
+          token,
+          roles:newUser.roles,
           email: newUser.email,
           phone: newUser.phone,
           name: newUser.name,

@@ -11,8 +11,15 @@ class ProductsController{
                paramInvalid: req.body.category
            })
        }
+
        const product = {
-           category, name, price, description, isAvailable,items
+           shortName:name.replace(/ /g,'-').toLowerCase(),
+           category, 
+           name, 
+           price, 
+           description, 
+           isAvailable,
+           items
        }
    
        const newProduct = await productRepository.store(product)

@@ -1,5 +1,9 @@
-const url = process.env.NODE_ENV === 'test' ? 
-'mongodb://maykids:w2w2w2w2@ds221609.mlab.com:21609/tests' : process.env.DB_SERVER
+/*const url = process.env.NODE_ENV === 'test' ? 
+'mongodb://127.0.0.1:27017/' : process.env.DB_SERVER
+*/
+
+const url = 'mongodb://127.0.0.1:27017/'
+
 const mongoose = require('mongoose')
 class MongoDb {
   constructor () {
