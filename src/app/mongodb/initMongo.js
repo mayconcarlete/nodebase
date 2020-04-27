@@ -15,6 +15,8 @@ class MongoDb {
     mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true })
     require('./models/Address')
     require('./models/User')
+    require('./models/ProductsItems')
+    require('./models/CategoryProducts')
   }
 }
 module.exports = new MongoDb()

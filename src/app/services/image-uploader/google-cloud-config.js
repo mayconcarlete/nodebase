@@ -1,0 +1,12 @@
+module.exports = {
+        "type": "service_account",
+        "project_id": "inlaid-aura-274023",
+        "private_key_id": "80b2071e3eb5a3a43d8e01199ddce49b1736efd2",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCroXAdfOyh/W9L\n+dJ7WqVHF4zyska5mwOuGqPZfUe6oUpLvxnA5lnjH9zUD5PY7gJWNFJu1NVuoIsm\n1w5TAuCOsKN4T38Bv4V+6VMZo9/ZEscZGXT6QgrkYKVmZL6bVL3mZRbfqaYMXa3l\nk6z0TC4w3Op8Imq83MxynO/Z+kg0gZNCqTpfANKBGJNQ1ILyX2tn1xsureJzylQ/\nWt0I7WCrp/Rntbf1YzY3XC7tfscVsSTW0m/7S0ww7xMooxuUZ4yEUevQ98Q6c7Vn\nTQk50+nSAgdiIFvN2rKwty0LTkZkPOOBjysqtM7vggkB5fGvIurtTq0XfgcrJzTK\nVp5sMsOLAgMBAAECggEAAhAuQgR9mb2WCBfy5PhkJ+nLZXgpgSixD3eS2atNC0bO\nFwFZ72eK1BVOznPOJ1ubxpUuxStPfNrMNsV7ZBm9llQ0RYl7HDZvsI9gfYc/9SLp\n0XjstDzKrGUnB9yVLVaESTqU3vpx8bsckI0eaqS8d2o9yAvn3ukD7NV1zVfaD1uB\nsxAfCPy2ga1I03za//chKFKNPMoT6Hl/mNQNI11xnCSXasBzqnZ2rlUybGfeqna+\n4WInvDdEnxXW1ado/u1Rna869OVOTX616w1fe2fVwTGzP0JFYfyBAhqMUQH1nv3z\nqVm77M33V02gwrAnubyI4AsEFc1+mORdDz4TnQ18KQKBgQDWLPP32EIsx5/NeOBn\nSpgD0WkPcHbbcl6xG6CBANQsdAixJ8lTYYwxPqfgNQgh7RHlsSgRWLQuLEykVsOh\n06oMV5EUQQDpexswZd6v9zbvLynpgtuLb3Gjd3PwGT/PLYulRRkpt4n9TrZ8KLtX\nsft/jacqZGq60OEDCf/6iFO9cwKBgQDNJZSEZnDTaiVDBSt14o0lXoaq9kX29UP4\nmfVmyCqmkZDIhtuFzbEQFe9BXVSOoRiOAwwxWP1rIZEuzvouM+JQPqzP8H65V9j0\nNnbk8uZBaOkx+kmIoq9bYzdLmpyV/ZZU1Ge6HNJ+5aOB6glgkESgv0baVIuq5LZQ\no/hYdivbiQKBgEGV8HvUMKeP1eLRAj7/O7/nj7mXof4fbtnjcOowO8kFG2hMm705\n4Plvi28ALmZdN57T+kYdmMeO70VgAHZ839T5t8axBTt6ZGAUwfW2yY7DLZ2BYgO3\n89+wA8Php4WlF99bYpJAzzPPt9gbjQsUyMRNt4Qmzfw5XL5WgJnSx3n7AoGAELmS\nnSS46BOMTCV8wJSiyzwkoIWJeLPQQdFTd3i0OXY+poqQFR2K5PPU2LBiN2qc1N8c\nvF0z8+r9qiJHtUKXndEuR5mkyzmFP4u9L7c53HVQJbnxCsmwoDO7i1dkkrnk6q+S\ncVLuOlhAd1P8RbodTjmp7hzccidJUdO8aIHh23kCgYEAghT6qgFPDeUCXWKA8bcc\nmkC47UvFzUYEIKolhAoQtlpI+ejrVh/SKbgCkQ431GUmDKdhrHhrDIP5bsBg8irI\nZVXtr+J3UNSUEEaZrf9b9XFbjD7KDWecC5NTUqm9u8TSpqqq6IhGtR3wUdHjKN+q\nZwvBIlFrDxzyzyJV46Sc1JY=\n-----END PRIVATE KEY-----\n",
+        "client_email": "mayconcarlete-23@inlaid-aura-274023.iam.gserviceaccount.com",
+        "client_id": "112950128987919280070",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mayconcarlete-23%40inlaid-aura-274023.iam.gserviceaccount.com"
+}

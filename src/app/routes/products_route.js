@@ -6,5 +6,5 @@ const checkProductMiddleware = require('../helpers/check-products')
 
 router.get('/', productsController.index)
 router.get('/:id', productsController.show)
-router.post('/', AuthenticateService.isAdmin,checkProductMiddleware.checkProducts, productsController.store)
+router.post('/', productsController.store)
 module.exports = router

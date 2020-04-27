@@ -7,6 +7,8 @@ class ProductsRepository{
     }
     show= async(productId)=>{
         const product = await Products.findOne({_id:productId})
+        .populate('category','displayName')
+        .populate('items', 'name category')
         return product
     }
     index = async ()=>{

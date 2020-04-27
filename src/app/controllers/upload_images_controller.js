@@ -20,7 +20,7 @@ class UploadImagesController{
             }
           // const checkBucket = await upload.checkBucket(req.params.category, req.params.name)
           const imgUrlArray = req.files.map(async(file)=>{
-               const result = await upload.uploadImage(file, getProduct.category, getProduct.shortName)
+               const result = await upload.uploadImage(file, getProduct.category._id, getProduct.shortName)
                return result
             })
             
@@ -30,13 +30,14 @@ class UploadImagesController{
                         imgUrl:url
                     }
                 })
+                console.log(urlFormat)
                 const productWithImage = await productsRepository.uploadImage(id, urlFormat)
                 return res.json(productWithImage)
             })
             
         }catch(err){
             console.log(`Deu erro: ${err}`)
-            return res.status(500).json(err.name)
+            return res.status(500).json(err)
             //next(e)
         }    
     }

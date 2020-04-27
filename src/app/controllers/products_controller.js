@@ -4,15 +4,7 @@ class ProductsController{
     async store(req, res){
         try{
         const {category,name,price,description,isAvailable, items} = req.body
-        const enumFields = ['promocao','combinados','gourmet','hamburguer','frango','filet-mignon','naturais', 'crepe','porcoes', 'acai','bebidas','sobremesas']
-        if(!enumFields.includes(req.body.category)){
-           return res.status(400).json({
-               error: 'Invalid Param',
-               paramInvalid: req.body.category
-           })
-       }
-
-       const product = {
+         const product = {
            shortName:name.replace(/ /g,'-').toLowerCase(),
            category, 
            name, 
@@ -31,7 +23,7 @@ class ProductsController{
 
     async show(req, res){
       try{
-        const productId = req.param.id
+        const productId = req.params.id
       const product = await productRepository.show(productId)
       if(!product){
           return res.status(400).json({msg:'Erro nenhum produto encontrado'})

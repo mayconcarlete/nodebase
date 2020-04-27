@@ -75,6 +75,30 @@ class YupService {
     const result = await schema.isValid(address)
     return result
   }
+
+  async checkCategory(category){
+    const schema = yup.object().shape({
+      displayName: yup.string().required(),
+      isAvailable:yup.boolean(),
+      imgUrl: yup.string()
+    })
+    try{
+      const result = await(schema.validate(category))
+      return result
+    }catch(error){
+     return error
+    }
+  }
+
+  async productsItems(item){
+    const schema = yup.object().shape({
+      category: yup.string().required(),
+      name:yup.string().required(),
+      isAvailable:yup.string()
+    })
+    const result = await schema.isValid(item)
+    return result
+  }
 }
 
 module.exports = new YupService()
