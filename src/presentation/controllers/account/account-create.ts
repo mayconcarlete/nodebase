@@ -1,6 +1,7 @@
 import { IController, IValidator } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
 import { badRequest } from "../../helpers/http-response";
+import { MissingParamError } from "../../errors";
 
 export class AccountCreateController implements IController{
     private readonly validators: IValidator
@@ -15,11 +16,13 @@ export class AccountCreateController implements IController{
             if(error){
                 return badRequest(error)
             }
+            
             return {
                 statusCode:200,
-                body:'ok'
+                body:req.body
             }
         }catch(e){
+            console.log(`Error:${e}`)
             return {
                 statusCode:500,
                 body:e  
