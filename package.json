@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/main/index.ts",
     "test": "jest --runInBand",
-    "test:unit":"npm test -- --watch -c jest.config.unit.js"
+    "test:unit": "npm test -- --watch -c jest.config.unit.js"
   },
   "repository": {
     "type": "git",

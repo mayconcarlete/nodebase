@@ -8,7 +8,7 @@ const makeSut = ():LengthValidator => {
 }
 
 describe('Test Length size of field class', () => {
-    test('Should return invalid param error if field length are shorter then minimum', () => {
+    test('Should return Invalid Param Error if field length are shorter then minimum', () => {
         const sut = makeSut()
         const httpRequest = {
             body:{
