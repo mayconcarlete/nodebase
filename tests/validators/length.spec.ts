@@ -1,5 +1,5 @@
-import { LengthValidator } from '../src/validators'
-import { InvalidParamError } from '../src/presentation/errors'
+import { LengthValidator } from '../../src/validators'
+import { InvalidParamError } from '../../src/presentation/errors'
 
 const field = 'name'
 const makeSut = ():LengthValidator => {

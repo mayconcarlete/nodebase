@@ -1,5 +1,5 @@
-import {CompareFieldsValidator} from '../src/validators/'
-import { InvalidParamError } from '../src/presentation/errors'
+import {CompareFieldsValidator} from '../../src/validators'
+import { InvalidParamError } from '../../src/presentation/errors'
 
 const field ='password'
 const fieldToCompare = 'passwordConfirmation'

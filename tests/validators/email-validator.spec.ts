@@ -1,6 +1,6 @@
-import {EmailValidator} from '../src/validators/'
-import { IEmailValidator } from '../src/validators/interfaces'
-import { InvalidParamError } from '../src/presentation/errors'
+import {EmailValidator} from '../../src/validators/'
+import { IEmailValidator } from '../../src/validators/interfaces'
+import { InvalidParamError } from '../../src/presentation/errors'
 
 class EmailValidatorAdaperStub implements IEmailValidator{
     isEmail(email: string): boolean {
