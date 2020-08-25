@@ -1,0 +1,23 @@
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "postgres",
+   "password": "googli",
+   "database": "postgres",
+   "logging": false,
+   "entities": [
+      "src/infra/db/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/infra/db/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/infra/db/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/infra/db/entity",
+      "migrationsDir": "src/infra/db/migration",
+      "subscribersDir": "src/infra/db/subscriber"
+   }
+}

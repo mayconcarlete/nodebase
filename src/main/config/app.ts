@@ -1,4 +1,5 @@
 import express from 'express'
+import "reflect-metadata";
 import v1Route from '../route/v1/'
 
 const app = express()

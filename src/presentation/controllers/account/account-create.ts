@@ -2,12 +2,16 @@ import { IController, IValidator } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
 import { badRequest } from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
+import { ICreateAccount } from "../../../domain/usecases/account/account-create";
+import { create } from "domain";
 
 export class AccountCreateController implements IController{
     private readonly validators: IValidator
-    
-    constructor(validators:IValidator) {
+    private readonly createAccount:ICreateAccount
+
+    constructor(validators:IValidator, createAccount:ICreateAccount) {
         this.validators = validators
+        this.createAccount = createAccount
     }
 
     async handle(req: THttpRequest): Promise<THttpResponse> {
@@ -16,10 +20,11 @@ export class AccountCreateController implements IController{
             if(error){
                 return badRequest(error)
             }
-            
+            const {name, password, email} = req.body
+            const newAccount = await this.createAccount.create({name, email, password})
             return {
                 statusCode:200,
-                body:req.body
+                body:newAccount
             }
         }catch(e){
             console.log(`Error:${e}`)

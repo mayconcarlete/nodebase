@@ -1,5 +1,6 @@
 import {CheckFields,ValidatorComposite, EmailValidator, CompareFieldsValidator, LengthValidator} from '../../../../../validators/'
 import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator'
+import { CreateAccount } from '../../../../../data/usecases/account/account-create'
 
 export const makeAccountValidation = ():ValidatorComposite => {
     const validatorsArray = []

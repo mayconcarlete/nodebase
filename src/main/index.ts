@@ -1,6 +1,8 @@
-import server from './config/app'
-import * as dotnev from 'dotenv'
 import path from 'path'
+import * as dotnev from 'dotenv'
+import 'reflect-metadata'
+import '../infra/db/'
+import server from './config/app'
 
 dotnev.config({path:path.resolve(__dirname, '..','..','.dev.env')})
 

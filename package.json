@@ -1,39 +1,47 @@
 {
-  "name": "nodebase",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon --exec ts-node src/main/index.ts",
-    "test": "jest --runInBand",
-    "test:unit": "npm test -- --watch -c jest.config.unit.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mayconcarlete/nodebase.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mayconcarlete/nodebase/issues"
-  },
-  "homepage": "https://github.com/mayconcarlete/nodebase#readme",
-  "devDependencies": {
-    "@types/dotenv": "^8.2.0",
-    "@types/express": "^4.17.7",
-    "@types/jest": "^26.0.10",
-    "@types/node": "^14.6.0",
-    "@types/validator": "^13.1.0",
-    "jest": "^26.4.1",
-    "nodemon": "^2.0.4",
-    "ts-jest": "^26.2.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^4.0.2"
-  },
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "validator": "^13.1.1"
-  }
+   "name": "nodebase",
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
+   "scripts": {
+      "dev": "nodemon --exec ts-node src/main/index.ts",
+      "test": "jest --runInBand",
+      "test:unit": "npm test -- --watch -c jest.config.unit.js",
+      "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+      "start": "ts-node src/index.ts"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/mayconcarlete/nodebase.git"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/mayconcarlete/nodebase/issues"
+   },
+   "homepage": "https://github.com/mayconcarlete/nodebase#readme",
+   "devDependencies": {
+      "@types/bcrypt": "^3.0.0",
+      "@types/dotenv": "^8.2.0",
+      "@types/express": "^4.17.7",
+      "@types/jest": "^26.0.10",
+      "@types/node": "^8.0.29",
+      "@types/validator": "^13.1.0",
+      "jest": "^26.4.1",
+      "nodemon": "^2.0.4",
+      "ts-jest": "^26.2.0",
+      "ts-node": "3.3.0",
+      "typescript": "3.3.3333"
+   },
+   "dependencies": {
+      "bcrypt": "^5.0.0",
+      "dotenv": "^8.2.0",
+      "express": "^4.17.1",
+      "pg": "^8.3.2",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.25",
+      "validator": "^13.1.1",
+      "mysql": "^2.14.1"
+   }
 }
