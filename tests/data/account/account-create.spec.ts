@@ -33,6 +33,16 @@ describe('Account Create Data', () => {
             password:"valid_password"
         }
         const addAccountSpy = jest.spyOn(addAccount,'add')
+        jest.spyOn(addAccount,'add').mockImplementationOnce(() => {
+            return new Promise(resolve => {
+                resolve({
+                    name:"valid_name",
+                    email:"valid_mail@mail.com",
+                    password:'hashedPassword',
+                    id:'any_id'
+                })
+            })
+        })
         jest.spyOn(encrypter, 'encrypt').mockImplementationOnce(() => {
             return new Promise(resolve => {
                 resolve('hashedPassword')
