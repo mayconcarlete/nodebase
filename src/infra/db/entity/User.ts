@@ -5,6 +5,9 @@ export class User {
 
     @PrimaryGeneratedColumn('uuid')
     id:string;
+    
+    @Column({nullable:false, default:true})
+    isActive:boolean;
 
     @Column({nullable:false, length:50})
     name: string;

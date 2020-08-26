@@ -14,6 +14,12 @@ export class User1598317886121 implements MigrationInterface {
                     default: 'uuid_generate_v4()'
                 },
                 {
+                    name:'isActive',
+                    type:'boolean',
+                    isNullable:false,
+                    default:true
+                },
+                {
                     name:'name',
                     type:'varchar(30)',
                     isNullable:false
