@@ -1,6 +1,6 @@
 import { IController, IValidator } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
-import { badRequest } from "../../helpers/http-response";
+import { badRequest, created, serverError } from "../../helpers/http-response";
 import { InvalidParamError } from "../../errors";
 import { ICreateAccount } from "../../../domain/usecases/account/account-create";
 import { IAuthenticator } from "../../protocols/authenticator";
@@ -32,23 +32,15 @@ export class AccountCreateController implements IController{
                 email:newAccount.email,
                 id:newAccount.id
             })
-
-            return {
-                statusCode:200,
-                body:{
-                    id:newAccount.id,
-                    isActive:newAccount.isActive,
-                    name:newAccount.name,
-                    email:newAccount.email,
-                    jwt: authUser
-                }
-            }
+            return created({
+                id:newAccount.id,
+                isActive:newAccount.isActive,
+                name:newAccount.name,
+                email:newAccount.email,
+                jwt: authUser
+            })
         }catch(e){
-            console.log(`Error:${e}`)
-            return {
-                statusCode:500,
-                body:e  
-            }
+           return serverError(e)
         }
     }
     

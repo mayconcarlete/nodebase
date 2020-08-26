@@ -1,6 +1,7 @@
 import { IController } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
 import { IGetAllAccounts } from "../../../domain/models/account/get-all-accounts";
+import { ok, serverError } from '../../helpers/http-response';
 
 export class GetAllAccountsController implements IController{
     private readonly getAllAccounts:IGetAllAccounts
@@ -11,15 +12,9 @@ export class GetAllAccountsController implements IController{
     async handle(req: THttpRequest): Promise<THttpResponse> {
         try{
             const accounts =await  this.getAllAccounts.getAll()
-            return {
-                statusCode:200,
-                body:accounts
-            }
+            return ok(accounts)
         }catch(e){
-            return {
-                statusCode:500,
-                body:e
-            }
+            return serverError(e)
         }
     }
 

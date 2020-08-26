@@ -1,7 +1,9 @@
 import { IController, IValidator } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
 import { IAuthenticateAccount } from "../../../domain/usecases/account/account-authenticate";
-import { badRequest } from "../../helpers/http-response";
+import { badRequest, notFound, serverError, ok } from "../../helpers/http-response";
+import { NotFound, EmailOrPasswordInvalid } from "../../errors";
+
 
 export class AccountAuthenticateController implements IController{
     
@@ -21,22 +23,11 @@ export class AccountAuthenticateController implements IController{
             const {email, password} = req.body
             const auth = await this.authenticate.auth({email, password})
             if(!auth){
-                return {
-                    statusCode:404,
-                    body:new Error('Cant make login')
-                }
+                return notFound(new EmailOrPasswordInvalid())
             }
-            return {
-                statusCode:200,
-                body:auth
-            }
+            return ok(auth)
         }catch(e){
-            return {
-                statusCode:500,
-                body: new Error('Vertigo')
-            }
-        }
-        
+           return serverError(e)
+        }   
     }
-
 }
