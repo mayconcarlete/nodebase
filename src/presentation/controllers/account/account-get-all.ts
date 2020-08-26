@@ -1,6 +1,6 @@
 import { IController } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
-import { IGetAllAccounts } from "../../../domain/usecases/account/get-all-accounts";
+import { IGetAllAccounts } from "../../../domain/usecases/account/account-get-all";
 import { ok, serverError } from '../../helpers/http-response';
 
 export class GetAllAccountsController implements IController{
