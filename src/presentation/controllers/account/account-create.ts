@@ -37,6 +37,7 @@ export class AccountCreateController implements IController{
                 statusCode:200,
                 body:{
                     id:newAccount.id,
+                    isActive:newAccount.isActive,
                     name:newAccount.name,
                     email:newAccount.email,
                     jwt: authUser
