@@ -1,4 +1,4 @@
-import { IGetAllAccounts } from "../../../domain/models/account/get-all-accounts"
+import { IGetAllAccounts } from "../../../domain/usecases/account/get-all-accounts"
 import { TAccount } from "../../../domain/models/account/account";
 import { ILoadAccounts } from "../../protocols/db/account/load-accounts";
 
