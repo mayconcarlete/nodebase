@@ -1,5 +1,5 @@
 import { AccountCreateController } from "../../../../../presentation/controllers/account/account-create";
-import { makeAccountValidation } from "./account-create-validations";
+import { makeAccountValidation } from "./account-create-validatiors";
 import { BcryptAdapter } from "../../../../../infra/bcrypt/bcrypt-adapter";
 import { TypeOrmAdapter } from "../../../../../infra/db/typeorm-adapter";
 import { CreateAccount } from "../../../../../data/usecases/account/account-create";

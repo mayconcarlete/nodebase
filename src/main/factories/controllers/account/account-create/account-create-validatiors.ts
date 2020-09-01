@@ -1,4 +1,4 @@
-import {CheckFields,ValidatorComposite, EmailValidator, CompareFieldsValidator, LengthValidator} from '../../../../../validators/'
+import {CheckFields,ValidatorComposite, EmailValidator, CompareFieldsValidator, LengthValidator} from '../../../../../validators'
 import { EmailValidatorAdapter } from '../../../../../infra/validator/email-validator'
 import { CreateAccount } from '../../../../../data/usecases/account/account-create'
 

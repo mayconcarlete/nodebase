@@ -11,7 +11,8 @@ const account:TAccount = {
     name:"valid_name",
     email:"valid_mail@mail.com",
     password:'hashedPassword',
-    id:'any_id'
+    id:'any_id',
+    isActive:true
 }
 
 const accountParams:TAccountAuthenticateParams = {

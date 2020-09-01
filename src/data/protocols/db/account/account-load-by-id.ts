@@ -1,5 +1,5 @@
 import { TAccount } from "../../../../domain/models/account/account";
 
-export interface IGetAccountByIdAdapter{
+export interface ILoadAccountByIdAdapter{
     getById(id:string):Promise<TAccount>
 }

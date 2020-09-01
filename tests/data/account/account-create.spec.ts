@@ -12,11 +12,13 @@ const accountParams = {
     email:"valid_mail@mail.com",
     password:"valid_password"
 }
-const validAccount = {
+
+const validAccount:TAccount = {
     name:"valid_name",
     email:"valid_mail@mail.com",
     password:'hashedPassword',
-    id:'any_id'
+    id:'any_id',
+    isActive:true
 }
 
 class TypeOrmAdapterStub implements IAddDB, ILoadAccountByEmail{
@@ -86,7 +88,8 @@ describe('Account Create Data', () => {
                     name:"valid_name",
                     email:"valid_mail@mail.com",
                     password:'hashedPassword',
-                    id:'any_id'
+                    id:'any_id',
+                    isActive:true
                 })
             })
         })
