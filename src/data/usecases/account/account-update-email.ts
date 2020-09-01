@@ -1,33 +1,34 @@
-import { IUpdateAccountEmail } from "../../../domain/usecases/account/account-update-email";
-import { TAccountUpdateEmail } from "../../../domain/models/account/account-update-email";
 import { TAccount } from "../../../domain/models/account/account";
 import { ILoadAccountById } from "../../../domain/usecases/account/account-get-by-id";
-import { IValidator } from "../../../presentation/protocols";
 import { ILoadAccountByEmail } from "../../protocols/db/account/load-account-by-email";
-import { IUpdateAccountEmailDb } from "../../protocols/db/account/account-update-email";
+import {  IUpdateAccountAdapter} from "../../protocols/db/account/account-update-adapter";
 import { IUncrypt } from "../../protocols/criptography/encrypter-field";
+import { IUpdateAccount } from "../../../domain/usecases/account/account-update";
+import { TAccountUpdate } from "../../../domain/models/account/account-update";
 
-export class UpdateAccountEmail implements IUpdateAccountEmail{
+export class UpdateAccountEmail implements IUpdateAccount{
     private readonly loadAccountById:ILoadAccountById
     private readonly loadAccountByEmail:ILoadAccountByEmail
-    private readonly updateAccountEmailAdapter:IUpdateAccountEmailDb
+    private readonly updateAccountEmailAdapter:IUpdateAccountAdapter
     private readonly uncryptPassword: IUncrypt
 
-    constructor(loadAcountById:ILoadAccountById, loadAccountByEmail:ILoadAccountByEmail, updateAccountEmailAdapter:IUpdateAccountEmailDb, uncryptPassword: IUncrypt ){
+    constructor(loadAcountById:ILoadAccountById, loadAccountByEmail:ILoadAccountByEmail, updateAccountEmailAdapter:IUpdateAccountAdapter, uncryptPassword: IUncrypt ){
         this.loadAccountById = loadAcountById
         this.loadAccountByEmail = loadAccountByEmail
         this.updateAccountEmailAdapter = updateAccountEmailAdapter
         this.uncryptPassword = uncryptPassword
     }
-
-    async updateEmail(account: TAccountUpdateEmail): Promise< TAccount| string> {    
-        const checkEmailOnDb = await this.loadAccountByEmail.load(account.email)
+    async updateAccount(accountUpdate: TAccountUpdate): Promise<TAccount | string> {
+        const checkEmailOnDb = await this.loadAccountByEmail.load(accountUpdate.email)
             if(!checkEmailOnDb){
-                const userAccount = await this.loadAccountById.getById(account.id)
+                const userAccount = await this.loadAccountById.getById(accountUpdate.id)
                 if(userAccount){
-                    const uncryptPassword = await this.uncryptPassword.uncrypt(account.password, userAccount.password)
+                    const uncryptPassword = await this.uncryptPassword.uncrypt(accountUpdate.password, userAccount.password)
                     if(uncryptPassword){
-                        const updatedAccount = await this.updateAccountEmailAdapter.updateEmailDb(account.id, account.email)
+                        const updatedAccount = await this.updateAccountEmailAdapter.updateAccount({
+                            id:accountUpdate.id,
+                            email:accountUpdate.email
+                        })
                         if(updatedAccount){
                             return updatedAccount
                         }

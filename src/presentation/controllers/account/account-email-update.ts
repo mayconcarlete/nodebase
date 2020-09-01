@@ -1,15 +1,16 @@
 import { IController, IValidator } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
 import { badRequest, serverError, notFound, ok } from "../../helpers/http-response";
-import { IUpdateAccountEmail } from "../../../domain/usecases/account/account-update-email";
-import { NotFound } from "../../errors";
+import { NotFound, InvalidParamError } from "../../errors";
+import { IUpdateAccount } from "../../../domain/usecases/account/account-update";
+
 
 
 export class UpdateAccountEmailController implements IController{
     private readonly validator:IValidator
-    private readonly updateAccountEmail:IUpdateAccountEmail
+    private readonly updateAccountEmail:IUpdateAccount
     
-    constructor(validator:IValidator, updateAccountEmail:IUpdateAccountEmail){
+    constructor(validator:IValidator, updateAccountEmail:IUpdateAccount){
         this.validator = validator
         this.updateAccountEmail = updateAccountEmail
     }
@@ -22,9 +23,10 @@ export class UpdateAccountEmailController implements IController{
             }
             const {email, password} = req.body
             const id = req.params.id
-            const updatedAccountEmail = await this.updateAccountEmail.updateEmail({email, id, password})
-            if(updatedAccountEmail === typeof(String)){
-                return notFound(new NotFound(updatedAccountEmail))
+            const updatedAccountEmail = await this.updateAccountEmail.updateAccount({email, id, password})
+            console.log(typeof(updatedAccountEmail))
+            if(typeof(updatedAccountEmail === 'string')){
+                return badRequest(new InvalidParamError(`${updatedAccountEmail}`))
             }
             return ok(updatedAccountEmail)
         }catch(e){

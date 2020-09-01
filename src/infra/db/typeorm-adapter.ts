@@ -5,23 +5,34 @@ import { getRepository } from "typeorm";
 import { ILoadAccountByEmail } from "../../data/protocols/db/account/load-account-by-email";
 import { ILoadAccounts } from "../../data/protocols/db/account/load-accounts";
 import { ILoadAccountById } from "../../domain/usecases/account/account-get-by-id";
-import { IUpdateAccountEmailDb } from "../../data/protocols/db/account/account-update-email";
+import { IUpdateAccountAdapter } from "../../data/protocols/db/account/account-update-adapter";
+import { TAccountUpdate } from "../../domain/models/account/account-update";
 
 export class TypeOrmAdapter implements 
     IAddDB, 
     ILoadAccountByEmail,
     ILoadAccounts,
     ILoadAccountById,
-    IUpdateAccountEmailDb
+    IUpdateAccountAdapter
     {
-        
-    async updateEmailDb(id: string, email: string): Promise<TAccount> {
+    async updateAccount(accountUpdate: TAccountUpdate): Promise<TAccount> {
         const user = getRepository(User)
-        const accountToUpdate = await user.findOne(id)
-        accountToUpdate.email = email
+        const accountToUpdate = await user.findOne(accountUpdate.id)
+        Object.keys(accountUpdate).forEach( key => {
+            console.log(key)
+            accountToUpdate[key] = accountUpdate[key]
+        })
         user.save(accountToUpdate)
-        return accountToUpdate 
+        return accountToUpdate
     }
+        
+    // async updateEmailDb(id: string, email: string): Promise<TAccount> {
+    //     const user = getRepository(User)
+    //     const accountToUpdate = await user.findOne(id)
+    //     accountToUpdate.email = email
+    //     user.save(accountToUpdate)
+    //     return accountToUpdate 
+    // }
    
     async getById(id: string): Promise<TAccount> {
         const user = getRepository(User)

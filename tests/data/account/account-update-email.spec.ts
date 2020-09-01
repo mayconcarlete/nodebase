@@ -1,19 +1,20 @@
 import { UpdateAccountEmail } from "../../../src/data/usecases/account/account-update-email"
 import { ILoadAccountById } from "../../../src/domain/usecases/account/account-get-by-id"
 import { ILoadAccountByEmail } from "../../../src/data/protocols/db/account/load-account-by-email"
-import { IUpdateAccountEmailDb } from "../../../src/data/protocols/db/account/account-update-email"
+import { IUpdateAccountAdapter } from "../../../src/data/protocols/db/account/account-update-adapter"
 import { LoadAccountByIdStub } from "../../mocks/loads/load-account-by-id-stub"
 import { LoadAccountByEmailStub } from "../../mocks/loads/load-account-by-email-stub"
 import { TAccount } from "../../../src/domain/models/account/account"
 import { TAccountUpdateEmail } from "../../../src/domain/models/account/account-update-email"
 import { IUncrypt } from "../../../src/data/protocols/criptography/encrypter-field"
+import { TAccountUpdate } from "../../../src/domain/models/account/account-update"
 
 type SutTypes = {
     sut:UpdateAccountEmail
     loadAccountById:ILoadAccountById
     loadAccountByEmail:ILoadAccountByEmail
     uncryptPassword:IUncrypt
-    updateAccountEmailAdapter:IUpdateAccountEmailDb
+    updateAccountEmailAdapter:IUpdateAccountAdapter
 }
 const httpRequest:TAccountUpdateEmail = {
     id:'valid_id',
@@ -29,8 +30,8 @@ const validAccount:TAccount = {
     isActive:true
 }
 
-class UpdateAccountEmailStub implements IUpdateAccountEmailDb{
-    async updateEmailDb(id: string, email: string): Promise<TAccount> {
+class UpdateAccountEmailStub implements IUpdateAccountAdapter{
+    async updateAccount(accountUpdate: TAccountUpdate): Promise<string | TAccount> {
         return validAccount
     }
 }
@@ -53,7 +54,7 @@ describe('Update Account Email class', ()=>{
     test('Ensure checkEmailOnDb to have been called with correct params', async () => {
         const {sut, loadAccountByEmail} = makeSut()
         const loadAccountByEmailSpy = jest.spyOn(loadAccountByEmail, 'load')
-        await sut.updateEmail(httpRequest)
+        await sut.updateAccount(httpRequest)
         expect(loadAccountByEmailSpy).toHaveBeenCalledWith('valid_email@mail.com')
     })
     test('Ensure updateEmail throws if checkEmailOnDb throw', async () => {
@@ -61,19 +62,19 @@ describe('Update Account Email class', ()=>{
         jest.spyOn(loadAccountByEmail, 'load').mockImplementation(async () =>{
           throw new Error()
         })
-        const result = sut.updateEmail(httpRequest)
+        const result = sut.updateAccount(httpRequest)
         await expect(result).rejects.toThrow()
     })
     test('Ensure updateEmail return a string if email already exists', async () => {
         const {sut, loadAccountByEmail} = makeSut()
         jest.spyOn(loadAccountByEmail, 'load').mockReturnValueOnce(new Promise(resolve=>resolve(validAccount)))
-        const result = await sut.updateEmail(httpRequest)
+        const result = await sut.updateAccount(httpRequest)
         expect(result).toEqual("Email already exists on db")
     })
     test('Ensure loadAccountById to have been called with correct params', async ()=>{
         const {sut, loadAccountById} = makeSut()
         const loadAccountByIdSpy = jest.spyOn(loadAccountById, 'getById')
-        await sut.updateEmail(httpRequest)
+        await sut.updateAccount(httpRequest)
         expect(loadAccountByIdSpy).toHaveBeenCalledWith('valid_id')
     })
     test('Ensure updateEmail throws if loadAccountById throw', async() => {
@@ -83,19 +84,19 @@ describe('Update Account Email class', ()=>{
                 throw new Error()
             })
         })
-        const result = sut.updateEmail(httpRequest)
+        const result = sut.updateAccount(httpRequest)
         expect(result).rejects.toThrow()
     })
     test('Ensure updateEmail return a string if loadAccountById return undefined', async ()=>{
         const {sut, loadAccountById} = makeSut()
         jest.spyOn(loadAccountById, 'getById').mockReturnValueOnce(new Promise(resolve => resolve(undefined)))
-        const result = await sut.updateEmail(httpRequest)
+        const result = await sut.updateAccount(httpRequest)
         expect(result).toEqual("Id doesnt found")
     })
     test('Ensure uncryptPassword to have been called with correct params', async ()=>{
         const {sut, uncryptPassword} = makeSut()
         const uncryptPasswordSpy = jest.spyOn(uncryptPassword, 'uncrypt')
-        await sut.updateEmail(httpRequest)
+        await sut.updateAccount(httpRequest)
         expect(uncryptPasswordSpy).toHaveBeenCalledWith('password','hashedPassword')
     })
     test('Ensure updateEmail throw if uncryptPassword throw', async () => {
@@ -105,13 +106,13 @@ describe('Update Account Email class', ()=>{
                 throw new Error()
             })
         })
-        sut.updateEmail(httpRequest)
-        await expect(sut.updateEmail).rejects.toThrow()
+        sut.updateAccount(httpRequest)
+        await expect(sut.updateAccount).rejects.toThrow()
     })
     test('Ensure updateEmail return a string if uncryptPassword fails', async ()=>{
         const {sut, uncryptPassword} = makeSut()
         jest.spyOn(uncryptPassword, 'uncrypt').mockReturnValueOnce(new Promise(resolve => resolve(false)))
-        const result = await sut.updateEmail(httpRequest)
+        const result = await sut.updateAccount(httpRequest)
         expect(result).toEqual("Password doesnt match")
     })
     test('Ensure updateAccountEmailAdapter to have been called with', async () => {
@@ -120,9 +121,9 @@ describe('Update Account Email class', ()=>{
         await sut.updateEmail(httpRequest)
         expect(updateAccountEmailAdapterSpy).toHaveBeenCalledWith( 'valid_id',"valid_email@mail.com")
     })
-    test('Ensure updateEmail throws if udpateAccountEmailAdapter throws', async () =>{
+    test('Ensure updateAccount throws if udpateAccountEmailAdapter throws', async () =>{
         const {sut, updateAccountEmailAdapter} = makeSut()
-        jest.spyOn(updateAccountEmailAdapter, 'updateEmailDb').mockImplementationOnce(()=>{
+        jest.spyOn(updateAccountEmailAdapter, 'updateAccount').mockImplementationOnce(()=>{
             return new Promise(()=>{
                 throw new Error()
             })
