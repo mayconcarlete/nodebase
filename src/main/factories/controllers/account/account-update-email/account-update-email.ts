@@ -1,4 +1,4 @@
-import { UpdateAccountEmailController } from "../../../../../presentation/controllers/account/account-email-update"
+import { UpdateAccountEmailController } from "../../../../../presentation/controllers/account/account-update-email"
 import { makeUpdateAccountEmailValidators } from "./account-update-email-validators"
 import { UpdateAccountEmail } from "../../../../../data/usecases/account/account-update-email"
 import { TypeOrmAdapter } from "../../../../../infra/db/typeorm-adapter"

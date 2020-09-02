@@ -24,9 +24,8 @@ export class UpdateAccountEmailController implements IController{
             const {email, password} = req.body
             const id = req.params.id
             const updatedAccountEmail = await this.updateAccountEmail.updateAccount({email, id, password})
-            console.log(typeof(updatedAccountEmail))
-            if(typeof(updatedAccountEmail === 'string')){
-                return badRequest(new InvalidParamError(`${updatedAccountEmail}`))
+            if(typeof(updatedAccountEmail) === 'string'){
+                return badRequest(new InvalidParamError(updatedAccountEmail))
             }
             return ok(updatedAccountEmail)
         }catch(e){
