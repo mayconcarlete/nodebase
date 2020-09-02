@@ -9,6 +9,6 @@ const router = Router()
 router.get('/',adaptRoute(makeGetAllAccounts()))
 router.get('/:id', adaptRoute(makeGetAccountById()))
 router.post('/', adaptRoute(makeAccountCreate()))
-router.put('/:id', adaptRoute(makeUpdateAccountEmailController()))
+router.put('/email/:id', adaptRoute(makeUpdateAccountEmailController()))
 
 export default router
