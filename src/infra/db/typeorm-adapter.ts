@@ -19,20 +19,11 @@ export class TypeOrmAdapter implements
         const user = getRepository(User)
         const accountToUpdate = await user.findOne(accountUpdate.id)
         Object.keys(accountUpdate).forEach( key => {
-            console.log(key)
             accountToUpdate[key] = accountUpdate[key]
         })
         user.save(accountToUpdate)
         return accountToUpdate
     }
-        
-    // async updateEmailDb(id: string, email: string): Promise<TAccount> {
-    //     const user = getRepository(User)
-    //     const accountToUpdate = await user.findOne(id)
-    //     accountToUpdate.email = email
-    //     user.save(accountToUpdate)
-    //     return accountToUpdate 
-    // }
    
     async getById(id: string): Promise<TAccount> {
         const user = getRepository(User)
