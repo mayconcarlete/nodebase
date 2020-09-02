@@ -57,7 +57,7 @@ describe('Update Account Email class', ()=>{
         await sut.updateAccount(httpRequest)
         expect(loadAccountByEmailSpy).toHaveBeenCalledWith('valid_email@mail.com')
     })
-    test('Ensure updateEmail throws if checkEmailOnDb throw', async () => {
+   test('Ensure updateEmail throws if checkEmailOnDb throw', async () => {
         const {sut, loadAccountByEmail} = makeSut()
         jest.spyOn(loadAccountByEmail, 'load').mockImplementation(async () =>{
           throw new Error()
@@ -117,9 +117,9 @@ describe('Update Account Email class', ()=>{
     })
     test('Ensure updateAccountEmailAdapter to have been called with', async () => {
         const {sut, updateAccountEmailAdapter} = makeSut()
-        const updateAccountEmailAdapterSpy = jest.spyOn(updateAccountEmailAdapter, 'updateEmailDb') 
-        await sut.updateEmail(httpRequest)
-        expect(updateAccountEmailAdapterSpy).toHaveBeenCalledWith( 'valid_id',"valid_email@mail.com")
+        const updateAccountEmailAdapterSpy = jest.spyOn(updateAccountEmailAdapter, 'updateAccount') 
+        await sut.updateAccount(httpRequest)
+        expect(updateAccountEmailAdapterSpy).toHaveBeenCalledWith({id: httpRequest.id, email:httpRequest.email})
     })
     test('Ensure updateAccount throws if udpateAccountEmailAdapter throws', async () =>{
         const {sut, updateAccountEmailAdapter} = makeSut()
@@ -128,23 +128,23 @@ describe('Update Account Email class', ()=>{
                 throw new Error()
             })
         })
-        await expect(sut.updateEmail(httpRequest))
+        await expect(sut.updateAccount(httpRequest))
         .rejects
         .toThrow()
     })
     test('Ensure updateEmail return a string if updateAccountEmailAdapter fails', async () =>{
         const {sut, updateAccountEmailAdapter} = makeSut()
-        jest.spyOn(updateAccountEmailAdapter, 'updateEmailDb').mockImplementationOnce(() => {
+        jest.spyOn(updateAccountEmailAdapter, 'updateAccount').mockImplementationOnce(() => {
             return new Promise((resolve, reject) => {
                 resolve(undefined)
             })
         })
-        const result = await sut.updateEmail(httpRequest)
+        const result = await sut.updateAccount(httpRequest)
         expect(result).toEqual("Cant update user")
     })
     test('Should return an updated user if everything is ok', async () => {
         const {sut} = makeSut()
-        const result = await sut.updateEmail(httpRequest)
+        const result = await sut.updateAccount(httpRequest)
         expect(result).toEqual(validAccount)
-    })
+    }) 
 })
