@@ -66,15 +66,18 @@ describe('Account Authenticate', () => {
     test('Should throw if load account throws', async() => {
         const{sut, loadAccountByEmail} = makeSut()
         jest.spyOn(loadAccountByEmail, 'load').mockImplementationOnce(async () => {
-           throw new Error()
+           return new Promise(()=>{
+               throw new Error()
+           })
         })
         const promise = sut.auth(accountParams)
         await expect(promise).rejects.toThrow()
     })
     test('Should be falsy if password provided doenst match with from DB', async () => {
-        const {sut} = makeSut()
+        const {sut, uncryptPassword} = makeSut()
+        jest.spyOn(uncryptPassword, 'uncrypt').mockReturnValueOnce(new Promise(resolve => resolve(false)))
         const result = await sut.auth(accountParams)
-        expect(result)
+        expect(result).toBeFalsy()
     })
     test('should call uncrypt with correct values', async () => {
         const {sut, uncryptPassword } = makeSut()
@@ -86,10 +89,12 @@ describe('Account Authenticate', () => {
         const {sut, uncryptPassword} = makeSut()
         jest.spyOn(uncryptPassword, 'uncrypt').mockImplementationOnce(async () => {
             return new Promise((resolve, reject) => {
-                reject(expect(sut.auth).rejects.toThrow())
+                throw new Error()
             })
         })  
-        sut.auth(accountParams)
+        await expect(sut.auth(accountParams))
+        .rejects
+        .toThrow()
     })
     test('should return jwt if and hashed password match', async () => {
         const {sut} = makeSut()

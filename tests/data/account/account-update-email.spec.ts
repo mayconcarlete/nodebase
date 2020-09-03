@@ -60,10 +60,13 @@ describe('Update Account Email class', ()=>{
    test('Ensure updateEmail throws if checkEmailOnDb throw', async () => {
         const {sut, loadAccountByEmail} = makeSut()
         jest.spyOn(loadAccountByEmail, 'load').mockImplementation(async () =>{
-          throw new Error()
+          return new Promise(()=>{
+              throw new Error()
+          })
         })
-        const result = sut.updateAccount(httpRequest)
-        await expect(result).rejects.toThrow()
+        await expect(sut.updateAccount(httpRequest))
+        .rejects
+        .toThrow()
     })
     test('Ensure updateEmail return a string if email already exists', async () => {
         const {sut, loadAccountByEmail} = makeSut()
@@ -84,8 +87,9 @@ describe('Update Account Email class', ()=>{
                 throw new Error()
             })
         })
-        const result = sut.updateAccount(httpRequest)
-        expect(result).rejects.toThrow()
+        await expect(sut.updateAccount(httpRequest))
+        .rejects
+        .toThrow()
     })
     test('Ensure updateEmail return a string if loadAccountById return undefined', async ()=>{
         const {sut, loadAccountById} = makeSut()
@@ -106,8 +110,7 @@ describe('Update Account Email class', ()=>{
                 throw new Error()
             })
         })
-        sut.updateAccount(httpRequest)
-        await expect(sut.updateAccount).rejects.toThrow()
+        await expect(sut.updateAccount(httpRequest)).rejects.toThrow()
     })
     test('Ensure updateEmail return a string if uncryptPassword fails', async ()=>{
         const {sut, uncryptPassword} = makeSut()

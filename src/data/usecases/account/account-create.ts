@@ -19,8 +19,10 @@ export class CreateAccount implements ICreateAccount{
         const account = await this.loadAccountByEmail.load(data.email)
         if(!account){
             const passwordEncrypted = await this.encrypter.encrypt(data.password)
-            const newAccount = await this.addAccount.add(Object.assign({}, data, {password:passwordEncrypted}))
-            return newAccount
+            if(passwordEncrypted){
+                const newAccount = await this.addAccount.add(Object.assign({}, data, {password:passwordEncrypted}))
+                return newAccount
+            }
         }
     }
 }

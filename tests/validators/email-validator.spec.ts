@@ -23,7 +23,7 @@ const makeSut = ():SutTypes =>{
 }
 
 describe('Test Email Validator', () => {
-    test('Ensure isEmail will be called with correct params', () => {
+  test('Ensure isEmail will be called with correct params', () => {
         const {sut, emailValidatorAdapter} = makeSut()
         const emailValidatorAdapterSpy = jest.spyOn(emailValidatorAdapter, 'isEmail')
         const httpRequest = {
@@ -53,11 +53,11 @@ describe('Test Email Validator', () => {
             }
         }
         jest.spyOn(emailValidatorAdapter, 'isEmail').mockImplementationOnce(() => {
-            throw Error()
+            throw new Error()
         })
         expect(sut.validate).toThrow()
     })
-    test('Should be falsy if email is correct', () => {
+   test('Should be falsy if email is correct', async() => {
         const {sut, emailValidatorAdapter} = makeSut()
         const httpRequest= {
             body:{
