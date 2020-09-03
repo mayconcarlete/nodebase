@@ -20,7 +20,7 @@ export class DeleteAccount implements IDeleteAccount{
     async delete(account: TAccountDelete): Promise<string | TAccount> {
         const loadAccount = await this.loadAccountById.getById(account.id)
         if(loadAccount){
-            const uncryptPassword = this.uncryptPassword.uncrypt(account.password, loadAccount.password)
+            const uncryptPassword = await this.uncryptPassword.uncrypt(account.password, loadAccount.password)
             if(uncryptPassword){
                 const deletedAccount = await this.deleteAccountAdapter.deleteDb(account.id)
                 if(deletedAccount){
