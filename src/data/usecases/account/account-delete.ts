@@ -1,11 +1,11 @@
-import { IDelete } from "../../../domain/usecases/account/account-delete";
+import { IDeleteAccount } from "../../../domain/usecases/account/account-delete";
 import { TAccountDelete } from "../../../domain/models/account/account-delete";
 import { TAccount } from "../../../domain/models/account/account";
 import { ILoadAccountById } from "../../../domain/usecases/account/account-get-by-id";
 import { IUncrypt } from "../../protocols/criptography/encrypter-field";
 import { IDeleteAdapter } from "../../protocols/db/account/account-delete";
 
-export class DeleteAccount implements IDelete{
+export class DeleteAccount implements IDeleteAccount{
     
     private readonly loadAccountById:ILoadAccountById
     private readonly uncryptPassword:IUncrypt

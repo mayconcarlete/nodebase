@@ -1,6 +1,6 @@
 import { TAccount } from "../../models/account/account";
 import { TAccountDelete } from "../../models/account/account-delete";
 
-export interface IDelete{
+export interface IDeleteAccount{
     delete(account:TAccountDelete):Promise<TAccount| string>
 }
