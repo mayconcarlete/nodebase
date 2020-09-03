@@ -6,6 +6,7 @@ import { makeGetAccountById } from '../../factories/controllers/account/account-
 import { makeUpdateAccountEmailController } from '../../factories/controllers/account/account-update-email/account-update-email'
 import { makeAccountUpdatePassword } from '../../factories/controllers/account/account-update-password/account-update-password'
 import { makeUpdateAccountName } from '../../factories/controllers/account/account-update-name/account-update-name'
+import { makeAccountDelete } from '../../factories/controllers/account/account-delete/account-delete'
 const router = Router()
 
 router.get('/',adaptRoute(makeGetAllAccounts()))
@@ -14,5 +15,6 @@ router.post('/', adaptRoute(makeAccountCreate()))
 router.put('/email/:id', adaptRoute(makeUpdateAccountEmailController()))
 router.put('/password/:id', adaptRoute(makeAccountUpdatePassword()))
 router.put('/name/:id', adaptRoute(makeUpdateAccountName()))
+router.delete('/delete/:id', adaptRoute(makeAccountDelete()))
 
 export default router
