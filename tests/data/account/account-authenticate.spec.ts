@@ -1,4 +1,4 @@
-import { IAuthenticateAccount } from "../../../src/domain/usecases/account/account-authenticate"
+import { IAuthenticateAccount } from "../../../src/domain/usecases/authenticate/authenticate"
 import { ILoadAccountByEmail } from "../../../src/data/protocols/db/account/load-account-by-email"
 import { AccountAuthenticate } from "../../../src/data/usecases/account/account-authenticate"
 import { IAuthenticator } from "../../../src/presentation/protocols/authenticator"

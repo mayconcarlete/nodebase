@@ -1,4 +1,4 @@
-import { IAuthenticateAccount } from "../../../domain/usecases/account/account-authenticate";
+import { IAuthenticateAccount } from "../../../domain/usecases/authenticate/authenticate";
 import { TAccountAuthenticateParams, TAccountAuthenticated } from "../../../domain/models/account/account-authenticate";
 import { ILoadAccountByEmail } from "../../protocols/db/account/load-account-by-email";
 import { IAuthenticator } from "../../../presentation/protocols/authenticator";

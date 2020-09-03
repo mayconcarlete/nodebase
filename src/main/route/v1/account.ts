@@ -7,6 +7,7 @@ import { makeUpdateAccountEmailController } from '../../factories/controllers/ac
 import { makeAccountUpdatePassword } from '../../factories/controllers/account/account-update-password/account-update-password'
 import { makeUpdateAccountName } from '../../factories/controllers/account/account-update-name/account-update-name'
 import { makeAccountDelete } from '../../factories/controllers/account/account-delete/account-delete'
+
 const router = Router()
 
 router.get('/',adaptRoute(makeGetAllAccounts()))

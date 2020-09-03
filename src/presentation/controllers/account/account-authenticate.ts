@@ -1,6 +1,6 @@
 import { IController, IValidator } from "../../protocols";
 import { THttpRequest, THttpResponse } from "../../models/http-req-res";
-import { IAuthenticateAccount } from "../../../domain/usecases/account/account-authenticate";
+import { IAuthenticateAccount } from "../../../domain/usecases/authenticate/authenticate";
 import { badRequest, notFound, serverError, ok } from "../../helpers/http-response";
 import { NotFound, EmailOrPasswordInvalid } from "../../errors";
 
