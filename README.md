@@ -1,2 +1,2 @@
-# Ecommerce backend using SOLID Principles and TDD
+# Auth service with clean architecture
 
