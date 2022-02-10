@@ -9,16 +9,24 @@
 // app.listen(PORT, () => {
 //   console.log('we are online on port: ', PORT)
 // })
-const a = (val) => val
-const b = (val) => `b${val}`
-const c = (val) => `c${val}`
+
+
+const a = (req, res, next) => {
+  req.param = 1
+  next()
+}
+const b = (req, res, next) => {
+  req.body = 2
+  next()
+}
+
 
 type composite = (fn: Function[]) => void
 
 const compositeApp = (...fns) => {
-  return (val) => {
-    return fns.reduce((acc, fn) => fn(acc), val)
+  return (req, res, next) => {
+    return fns.reduce(({req, res, next}, fn) => fn(req, res, next), {req, res, next})
   }
 }
 
-console.log(compositeApp(a,b,c)('z'))
+console.log(compositeApp(a, b)({param:{}, body:{}}, {}, () => console.log('next')))
