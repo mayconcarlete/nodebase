@@ -25,7 +25,7 @@ type composite = (fn: Function[]) => void
 
 const compositeApp = (...fns) => {
   return (req, res, next) => {
-    return fns.reduce(({req, res, next}, fn) => fn(req, res, next), {req, res, next})
+    return fns.reduce((acc, fn) => fn(acc.req, acc.res, acc.next), {req, res, next})
   }
 }
 
